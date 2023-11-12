@@ -20,19 +20,25 @@
 <img
       src="./assets/images/Frame 20873247034.jpg"
       alt="Full Images"
-      height="604"
+      height="600"
     />
   <br>
           <img
-      src="./assets/images/2.webp"
+      src="./assets/images/Frame 20873246981.jpg"
       alt="Full Images"
       height="300"
     />
             <img
-      src="./assets/images/3.webp"
+      src="./assets/images/97shots_so2.jpg"
       alt="Full Images"
       height="300"
     />
+             <img
+      src="./assets/images/Frame 20873246981.jpg"
+      alt="Full Images"
+      height="600"
+    />
+    
 
  </div>
 
