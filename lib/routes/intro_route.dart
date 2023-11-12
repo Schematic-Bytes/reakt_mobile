@@ -1,16 +1,16 @@
-import 'package:reakt/routes/features.dart';
-import 'package:reakt/widgets/permission.dart';
+import 'package:reakt/routes/features_route.dart';
+// import 'package:reakt/widgets/permission.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Intro extends StatelessWidget {
-  const Intro({super.key});
+class IntroRoute extends StatelessWidget {
+  const IntroRoute({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           margin: const EdgeInsets.all(20),
           child: Column(
             children: [
@@ -45,7 +45,6 @@ class Intro extends StatelessWidget {
               const Spacer(),
               InkWell(
                 onTap: () {
-                  requestPhonePermission();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Features()),

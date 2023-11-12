@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:reakt/routes/home.dart';
+import 'package:reakt/routes/home_route.dart';
 
 class Features extends StatelessWidget {
   const Features({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           margin: const EdgeInsets.all(20),
           child: Column(
             children: [
@@ -99,7 +99,7 @@ class Features extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Home()),
+                    MaterialPageRoute(builder: (context) => const HomeRoute()),
                   );
                 },
                 child: Container(

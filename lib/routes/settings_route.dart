@@ -1,35 +1,35 @@
-import 'package:reakt/routes/personal_info.dart';
+import 'package:reakt/routes/personal_info_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({super.key});
+class SettingsRoute extends StatefulWidget {
+  const SettingsRoute({super.key});
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<SettingsRoute> createState() => _SettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsState extends State<SettingsRoute> {
   bool accident_detection = false;
   bool dark_theme = false;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "Settings",
-            style: GoogleFonts.inter(
-              fontSize: 34,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF000000),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Settings",
+          style: GoogleFonts.inter(
+            fontSize: 34,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFF000000),
           ),
         ),
-        body: Container(
+      ),
+      body: SafeArea(
+        child: Container(
           margin: const EdgeInsets.all(20),
           child: Column(
             children: [
@@ -38,7 +38,7 @@ class _SettingsState extends State<Settings> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Info()),
+                    MaterialPageRoute(builder: (context) => const InfoRoute()),
                   );
                 },
                 child: Container(

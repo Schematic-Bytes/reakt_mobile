@@ -1,11 +1,11 @@
 import 'package:go_router/go_router.dart';
-import 'package:reakt/routes/intro.dart';
+import 'package:reakt/routes/intro_route.dart';
 
 final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: "/",
-      builder: (context, state) => const Intro(),
+      builder: (context, state) => const IntroRoute(),
     ),
   ],
 );

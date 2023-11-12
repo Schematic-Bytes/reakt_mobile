@@ -1,15 +1,15 @@
-import 'package:reakt/routes/settings.dart';
+import 'package:reakt/routes/settings_route.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class HomeRoute extends StatelessWidget {
+  const HomeRoute({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           margin: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,7 +47,7 @@ class Home extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Settings()),
+                                builder: (context) => const SettingsRoute()),
                           );
                         },
                         icon: const Icon(
