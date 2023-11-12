@@ -24,7 +24,7 @@
     />
   <br>
           <img
-      src="./assets/images/Frame 20873246981.jpg"
+      src="./assets/images/570shots_so002.jpg"
       alt="Full Images"
       height="300"
     />
@@ -36,7 +36,7 @@
              <img
       src="./assets/images/Frame 20873246981.jpg"
       alt="Full Images"
-      height="600"
+      height="560"
     />
     
 
