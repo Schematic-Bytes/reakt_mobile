@@ -18,7 +18,7 @@
 <br>
 	
 <img
-      src="./assets/images/1.webp"
+      src="./assets/images/Frame 20873247034.jpg"
       alt="Full Images"
       height="604"
     />
