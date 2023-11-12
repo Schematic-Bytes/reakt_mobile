@@ -16,33 +16,25 @@
     Safety Just A Tap Away
   </b>
 <br>
-        <img
-      src="./assets/images/301shots_so.webp"
+	
+<img
+      src="./assets/images/1.webp"
       alt="Full Images"
       height="604"
     />
   <br>
           <img
-      src="./assets/images/839shots_so.webp"
+      src="./assets/images/2.webp"
       alt="Full Images"
       height="300"
     />
             <img
-      src="./assets/images/767shots_so.webp"
+      src="./assets/images/3.webp"
       alt="Full Images"
       height="300"
     />
-              <img
-      src="./assets/images/683shots_so.webp"
-      alt="Full Images"
-      height="300"
-    />
-              <img
-      src="./assets/images/536shots_so.webp"
-      alt="Full Images"
-      height="300"
-    />
-</div>
+
+ </div>
 
 ## Table of Contents
 1. [Introduction](#introduction)
