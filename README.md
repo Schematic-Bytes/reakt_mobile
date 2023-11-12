@@ -67,12 +67,13 @@ This app relies on a backend  on firebase.
 
 Our Emergency response app provides a lot of features like
 
- -   Location
- - Name
- - Email
- - Mobile Number
- - Address
- - Medical Records
+ - Sharing live user location
+ - Sharing the user's name and email address
+ - Sharing the user's Mobile Number
+ - Sharing the user's home address
+ - Sharing information regarding the user's past Medical Records and Active Medications.
+
+   All these data will only be available to the Authorised Persons and will not be shared anywhere.
   
 - *User-Friendly Interface:* The application is designed with a user-friendly interface for ease of use.
 
