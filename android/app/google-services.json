@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1079935323726",
+    "project_id": "reakt-e5cc1",
+    "storage_bucket": "reakt-e5cc1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079935323726:android:5e94ed4d832f08f71b7d1f",
+        "android_client_info": {
+          "package_name": "com.example.reakt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTvkkJYQkyVm0kWN-yNNHAjoD-BLL7Q1M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
