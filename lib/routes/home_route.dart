@@ -1,12 +1,93 @@
+import 'package:flutter/cupertino.dart';
 import 'package:reakt/routes/settings_route.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeRoute extends StatelessWidget {
+class HomeRoute extends StatefulWidget {
   const HomeRoute({super.key});
 
   @override
+  State<HomeRoute> createState() => _HomeRouteState();
+}
+
+class _HomeRouteState extends State<HomeRoute> {
+  bool onTapSos = false;
+  bool onTapMic = false;
+  String state = "default";
+
+  @override
   Widget build(BuildContext context) {
+    var sosState = SizedBox(
+      height: MediaQuery.sizeOf(context).width,
+      width: MediaQuery.sizeOf(context).width,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            shape: const CircleBorder(),
+            backgroundColor: const Color(0xFF000000)),
+        child: Text(
+          "Tap here to send Emergeny message",
+          textAlign: TextAlign.center,
+          style: GoogleFonts.inter(fontSize: 28, color: Colors.white),
+        ),
+        onPressed: () async {
+          setState(() {
+            state = "loading";
+          });
+
+          await Future.delayed(const Duration(seconds: 3));
+
+          setState(() {
+            state = "done";
+          });
+
+          await Future.delayed(const Duration(seconds: 1));
+
+          setState(() {
+            state = "default";
+          });
+        },
+      ),
+    );
+    print(state);
+    if (state == "loading") {
+      print("kindi");
+      sosState = SizedBox(
+        height: MediaQuery.sizeOf(context).width,
+        width: MediaQuery.sizeOf(context).width,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: const CircleBorder(),
+            backgroundColor: const Color(0xFFD71921),
+          ),
+          child: const CupertinoActivityIndicator(
+            color: Colors.black,
+            radius: 20,
+          ),
+          onPressed: () {},
+        ),
+      );
+    } else if (state == "done") {
+      sosState = SizedBox(
+        height: MediaQuery.sizeOf(context).width,
+        width: MediaQuery.sizeOf(context).width,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              backgroundColor: const Color(0xFFD71921)),
+          child: Text(
+            "Message sent successfully",
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(fontSize: 28, color: Colors.white),
+          ),
+          onPressed: () {
+            setState(() {
+              onTapSos = !onTapSos;
+            });
+          },
+        ),
+      );
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -14,12 +95,12 @@ class HomeRoute extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(height: 10),
-              Container(
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    Column(
+              Stack(
+                alignment: AlignmentDirectional.centerStart,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Column(
                       children: [
                         Text(
                           "Reakt",
@@ -38,45 +119,30 @@ class HomeRoute extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: const Color.fromRGBO(179, 179, 179, 0.1)),
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SettingsRoute()),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.settings_outlined,
-                        ),
-                        iconSize: 30,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SettingsRoute(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.settings_outlined,
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.sizeOf(context).width,
-                    width: MediaQuery.sizeOf(context).width,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: const CircleBorder(),
-                          backgroundColor: const Color(0xFF000000)),
-                      child: Text(
-                        "Tap here to send Emergeny message",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
-                            fontSize: 28, color: Colors.white),
-                      ),
-                      onPressed: () {},
+                      iconSize: 30,
                     ),
                   ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Column(
+                children: [
+                  sosState,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -84,13 +150,25 @@ class HomeRoute extends StatelessWidget {
                         width: 72,
                         height: 72,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              onTapMic = !onTapMic;
+                            });
+                          },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF1C1B1E)),
-                          child: const Icon(
-                            Icons.mic_none_outlined,
-                            color: Colors.white,
+                            backgroundColor: onTapMic
+                                ? const Color(0xFFD71921)
+                                : const Color(0xFF1C1B1E),
                           ),
+                          child: onTapMic
+                              ? const Icon(
+                                  Icons.stop_circle_outlined,
+                                  color: Colors.white,
+                                )
+                              : const Icon(
+                                  Icons.mic_none_outlined,
+                                  color: Colors.white,
+                                ),
                         ),
                       ),
                     ],

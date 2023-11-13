@@ -49,43 +49,7 @@ class Features extends StatelessWidget {
                   color: const Color(0xFFF1F1F1),
                 ),
                 child: Text(
-                  "One-tap emergency reporting",
-                  style: GoogleFonts.inter(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF0A0606),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.all(20),
-                width: MediaQuery.sizeOf(context).width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color(0xFFF1F1F1),
-                ),
-                child: Text(
-                  "One-tap emergency reporting",
-                  style: GoogleFonts.inter(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF0A0606),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.all(20),
-                width: MediaQuery.sizeOf(context).width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color(0xFFF1F1F1),
-                ),
-                child: Text(
-                  "One-tap emergency reporting",
+                  "Real-time location sharing",
                   style: GoogleFonts.inter(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
