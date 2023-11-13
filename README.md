@@ -67,12 +67,13 @@ This app relies on a backend  on firebase.
 
 Our Emergency response app provides a lot of features like
 
- -   Location
- - Name
- - Email
- - Mobile Number
- - Address
- - Medical Records
+ - Sharing live user location
+ - Sharing the user's name and email address
+ - Sharing the user's Mobile Number
+ - Sharing the user's home address
+ - Sharing information regarding the user's past Medical Records and Active Medications.
+
+   All these data will only be available to the Authorised Persons and will not be shared anywhere.
   
 - *User-Friendly Interface:* The application is designed with a user-friendly interface for ease of use.
 
@@ -107,19 +108,18 @@ https://github.com/Schematic-Bytes/reakt_mobile
 
 ## 5. Usage <a name="usage"></a>
 
-1. There are two apps one for the admin and the other one for user's.
+-  There are two apps one for the admin and the other one for user's.
+	- visite the admin [github repo]([url](https://github.com/Schematic-Bytes/reakt_admin))
 
-2. Admin's are required to sign-up
+1. user login not required for fast access 
 
-3. From there they can see all SOS  signals and also respond to them, view the signal origin and so on. 
+2. User's need to click on  the "Emergency" button for sending their SOS signal.
 
-4. User's need to click on  the "Emergency" button for sending their SOS signal.
-
-5. The user's can also add their personal details and medical records.
+3. The user's can also add their personal details and medical records.
 
 
 ## 6. License <a name="license"></a>
 
-This project is licensed under the [AGPL License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
 
 ---
