@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:reakt/routes/settings_route.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:reakt/routes/settings_route.dart';
 
 class HomeRoute extends StatefulWidget {
   const HomeRoute({super.key});
@@ -11,21 +15,25 @@ class HomeRoute extends StatefulWidget {
 }
 
 class _HomeRouteState extends State<HomeRoute> {
-  bool onTapSos = false;
-  bool onTapMic = false;
   String state = "default";
+
+  Future<Placemark> getCurrentLocationPlacemark(Position position) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+    final locationData = placemarks.where((loc) => loc.thoroughfare?.isNotEmpty ?? false);
+    return locationData.first;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final database = context.read<FirebaseFirestore>();
+
     var sosState = SizedBox(
       height: MediaQuery.sizeOf(context).width,
       width: MediaQuery.sizeOf(context).width,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            shape: const CircleBorder(),
-            backgroundColor: const Color(0xFF000000)),
+        style: ElevatedButton.styleFrom(shape: const CircleBorder(), backgroundColor: const Color(0xFF000000)),
         child: Text(
-          "Tap here to send Emergeny message",
+          "Tap here to send Emergency message",
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(fontSize: 28, color: Colors.white),
         ),
@@ -34,7 +42,19 @@ class _HomeRouteState extends State<HomeRoute> {
             state = "loading";
           });
 
-          await Future.delayed(const Duration(seconds: 3));
+          final loc = await Geolocator.getCurrentPosition();
+          final landmark = await getCurrentLocationPlacemark(loc);
+
+          final geohash = GeoPoint(loc.latitude, loc.longitude);
+
+          await database.collection("requests").add({
+            "geohash": geohash,
+            "location": {
+              "sub": landmark.thoroughfare,
+              "locality": landmark.locality,
+              "postalcode": landmark.postalCode,
+            }
+          });
 
           setState(() {
             state = "done";
@@ -69,19 +89,13 @@ class _HomeRouteState extends State<HomeRoute> {
         height: MediaQuery.sizeOf(context).width,
         width: MediaQuery.sizeOf(context).width,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              shape: const CircleBorder(),
-              backgroundColor: const Color(0xFFD71921)),
+          style: ElevatedButton.styleFrom(shape: const CircleBorder(), backgroundColor: const Color(0xFFD71921)),
           child: Text(
             "Message sent successfully",
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(fontSize: 28, color: Colors.white),
           ),
-          onPressed: () {
-            setState(() {
-              onTapSos = !onTapSos;
-            });
-          },
+          onPressed: () {},
         ),
       );
     }
@@ -93,12 +107,12 @@ class _HomeRouteState extends State<HomeRoute> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Stack(
-                alignment: AlignmentDirectional.centerStart,
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Column(
+              const SizedBox(height: 10),
+              Container(
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    Column(
                       children: [
                         Text(
                           "Reakt",
@@ -107,44 +121,70 @@ class _HomeRouteState extends State<HomeRoute> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        SizedBox(
-                          width: MediaQuery.sizeOf(context).width / 1.6,
-                          child: Text(
-                            "Your location : Vadanappally Thrissur vvvvvvvv",
-                            style: GoogleFonts.inter(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xFF1C1B1E),
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
+                        FutureBuilder<Placemark>(
+                            future: Geolocator.getCurrentPosition().then((value) => getCurrentLocationPlacemark(value)),
+                            builder: (context, snapshot) {
+                              String location = "loading";
+                              if (snapshot.hasData) {
+                                Placemark? data = snapshot.data;
+                                location = "${data!.thoroughfare}";
+                              }
+                              return Text(
+                                "Your location : $location",
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFF1C1B1E),
+                                ),
+                              );
+                            }),
                       ],
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SettingsRoute(),
-                          ),
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.settings_outlined,
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50), color: const Color.fromRGBO(179, 179, 179, 0.1)),
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const SettingsRoute()),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.settings_outlined,
+                        ),
+                        iconSize: 30,
                       ),
-                      iconSize: 30,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              const SizedBox(height: 10),
               Column(
                 children: [
                   sosState,
+                  // FutureBuilder<void>(
+                  //     future: Future.delayed(const Duration(milliseconds: 3)),
+                  //     builder: (context, snapshot) {
+                  //       return SizedBox(
+                  //         height: MediaQuery.sizeOf(context).width,
+                  //         width: MediaQuery.sizeOf(context).width,
+                  //         child: ElevatedButton(
+                  //           style: ElevatedButton.styleFrom(
+                  //               shape: const CircleBorder(), backgroundColor: const Color(0xFF000000)),
+                  //           child: (snapshot.connectionState == ConnectionState.waiting)
+                  //               ? Text(
+                  //                   "Tap here to send Emergeny message",
+                  //                   textAlign: TextAlign.center,
+                  //                   style: GoogleFonts.inter(fontSize: 28, color: Colors.white),
+                  //                 )
+                  //               : const CupertinoActivityIndicator(
+                  //                   color: Colors.white,
+                  //                   radius: 20,
+                  //                 ),
+                  //           onPressed: () {},
+                  //         ),
+                  //       );
+                  //     }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -152,25 +192,12 @@ class _HomeRouteState extends State<HomeRoute> {
                         width: 72,
                         height: 72,
                         child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              onTapMic = !onTapMic;
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: onTapMic
-                                ? const Color(0xFFD71921)
-                                : const Color(0xFF1C1B1E),
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1C1B1E)),
+                          child: const Icon(
+                            Icons.mic_none_outlined,
+                            color: Colors.white,
                           ),
-                          child: onTapMic
-                              ? const Icon(
-                                  Icons.stop_circle_outlined,
-                                  color: Colors.white,
-                                )
-                              : const Icon(
-                                  Icons.mic_none_outlined,
-                                  color: Colors.white,
-                                ),
                         ),
                       ),
                     ],
@@ -179,11 +206,8 @@ class _HomeRouteState extends State<HomeRoute> {
               ),
               const SizedBox(height: 50),
               Text(
-                "Tap and hold the button to send voice note along with your current location.",
-                style: GoogleFonts.inter(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF1C1B1E)),
+                "Tap the red SOS button to send an emergency alert to the nearest police station.",
+                style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w500, color: const Color(0xFF1C1B1E)),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 10),
