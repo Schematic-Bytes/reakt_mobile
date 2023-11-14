@@ -109,12 +109,16 @@ class _HomeRouteState extends State<HomeRoute> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        Text(
-                          "Your location : Vadanappally Thrissur",
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(0xFF1C1B1E),
+                        SizedBox(
+                          width: MediaQuery.sizeOf(context).width / 1.6,
+                          child: Text(
+                            "Your location : Vadanappally Thrissur vvvvvvvv",
+                            style: GoogleFonts.inter(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xFF1C1B1E),
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
@@ -177,7 +181,7 @@ class _HomeRouteState extends State<HomeRoute> {
               ),
               const SizedBox(height: 50),
               Text(
-                "Tap the red SOS button to send an emergency alert to the nearest police station.",
+                "Tap and hold the button to send voice note along with your current location.",
                 style: GoogleFonts.inter(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
