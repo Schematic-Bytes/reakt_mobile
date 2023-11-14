@@ -132,14 +132,25 @@ class _HomeRouteState extends State<HomeRoute> {
                         ),
                         SizedBox(
                           width: MediaQuery.sizeOf(context).width / 1.6,
-                          child: Text(
-                            "Your location : Vadanappally Thrissur vvvvvvvv",
-                            style: GoogleFonts.inter(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xFF1C1B1E),
-                            ),
-                            overflow: TextOverflow.ellipsis,
+                          child: FutureBuilder<Placemark>(
+                            future: Geolocator.getCurrentPosition().then(
+                                (value) => getCurrentLocationPlacemark(value)),
+                            builder: (context, snapshot) {
+                              String location = "loading";
+                              if (snapshot.hasData) {
+                                Placemark? data = snapshot.data;
+                                location = "${data!.thoroughfare}";
+                              }
+                              return Text(
+                                "Your location : $location",
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFF1C1B1E),
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              );
+                            },
                           ),
                         ),
                       ],
