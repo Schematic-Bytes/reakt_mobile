@@ -60,7 +60,8 @@ class _HomeRouteState extends State<HomeRoute> {
               "locality": landmark.locality,
               "postalcode": landmark.postalCode,
             },
-            "phone": mobileNumber
+            "phone": mobileNumber,
+            "datetime": Timestamp.now(),
           });
 
           setState(() {
