@@ -148,7 +148,7 @@ class _HomeRouteState extends State<HomeRoute> {
                                   fontWeight: FontWeight.w400,
                                   color: const Color(0xFF1C1B1E),
                                 ),
-                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
                               );
                             },
                           ),
