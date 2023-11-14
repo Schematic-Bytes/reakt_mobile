@@ -48,9 +48,7 @@ class _HomeRouteState extends State<HomeRoute> {
         },
       ),
     );
-    print(state);
     if (state == "loading") {
-      print("kindi");
       sosState = SizedBox(
         height: MediaQuery.sizeOf(context).width,
         width: MediaQuery.sizeOf(context).width,
