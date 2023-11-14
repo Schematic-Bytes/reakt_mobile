@@ -1,7 +1,7 @@
-import 'package:reakt/routes/features_route.dart';
 // import 'package:reakt/widgets/permission.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:reakt/routes/features_route.dart';
 
 class IntroRoute extends StatelessWidget {
   const IntroRoute({super.key});
@@ -35,8 +35,7 @@ class IntroRoute extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: "Tap",
-                      style: GoogleFonts.inter(
-                          fontSize: 17, fontWeight: FontWeight.w800),
+                      style: GoogleFonts.inter(fontSize: 17, fontWeight: FontWeight.w800),
                     ),
                     const TextSpan(text: " away."),
                   ],
@@ -44,7 +43,7 @@ class IntroRoute extends StatelessWidget {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {
+                onTap: () async {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Features()),

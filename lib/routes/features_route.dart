@@ -1,12 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:reakt/routes/home_route.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class Features extends StatelessWidget {
   const Features({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authService = context.read<FirebaseAuth>();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -96,11 +100,13 @@ class Features extends StatelessWidget {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeRoute()),
-                  );
+                onTap: () async {
+                  const status = [Permission.location, Permission.phone];
+                  if (await Permission.location.isDenied || await Permission.phone.isDenied) {
+                    await status.request();
+                  }
+                  final user = await authService.signInAnonymously();
+                  context.go("/");
                 },
                 child: Container(
                   padding: const EdgeInsets.all(16),
