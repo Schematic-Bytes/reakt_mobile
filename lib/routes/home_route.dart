@@ -115,12 +115,12 @@ class _HomeRouteState extends State<HomeRoute> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(height: 10),
-              Container(
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    Column(
+              Stack(
+                alignment: AlignmentDirectional.centerStart,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Column(
                       children: [
                         Text(
                           "Reakt",
@@ -129,8 +129,11 @@ class _HomeRouteState extends State<HomeRoute> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        FutureBuilder<Placemark>(
-                            future: Geolocator.getCurrentPosition().then((value) => getCurrentLocationPlacemark(value)),
+                        SizedBox(
+                          width: MediaQuery.sizeOf(context).width / 1.6,
+                          child: FutureBuilder<Placemark>(
+                            future: Geolocator.getCurrentPosition().then(
+                                (value) => getCurrentLocationPlacemark(value)),
                             builder: (context, snapshot) {
                               String location = "loading";
                               if (snapshot.hasData) {
@@ -144,28 +147,32 @@ class _HomeRouteState extends State<HomeRoute> {
                                   fontWeight: FontWeight.w400,
                                   color: const Color(0xFF1C1B1E),
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               );
-                            }),
+                            },
+                          ),
+                        ),
                       ],
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50), color: const Color.fromRGBO(179, 179, 179, 0.1)),
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const SettingsRoute()),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.settings_outlined,
-                        ),
-                        iconSize: 30,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SettingsRoute(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.settings_outlined,
                       ),
+                      iconSize: 30,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               Column(
                 children: [
@@ -185,84 +192,21 @@ class _HomeRouteState extends State<HomeRoute> {
                           ),
                         ),
                       ),
-                      FutureBuilder<Placemark>(
-                        future: Geolocator.getCurrentPosition().then((value) => getCurrentLocationPlacemark(value)),
-                        builder: (context, snapshot) {
-                          String location = "loading";
-                          if (snapshot.hasData) {
-                            Placemark? data = snapshot.data;
-                            location = "${data!.thoroughfare}";
-                          }
-                          return Text(
-                            "Your location : $location",
-                            style: GoogleFonts.inter(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xFF1C1B1E),
-                            ),
-                          );
-                        },
-                      ),
                     ],
                   ),
                 ],
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: const Color.fromRGBO(179, 179, 179, 0.1),
+              const SizedBox(height: 50),
+              Text(
+                "Tap and hold the button to send voice note along with your current location.",
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF1C1B1E),
                 ),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SettingsRoute()),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.settings_outlined,
-                  ),
-                  iconSize: 30,
-                ),
+                textAlign: TextAlign.center,
               ),
-              Column(
-                children: [
-                  sosState,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        width: 72,
-                        height: 72,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1C1B1E)),
-                          child: onTapMic
-                              ? const Icon(
-                                  Icons.stop_circle_outlined,
-                                  color: Colors.white,
-                                )
-                              : const Icon(
-                                  Icons.mic_none_outlined,
-                                  color: Colors.white,
-                                ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-                  Text(
-                    "Tap the red SOS button to send an emergency alert to the nearest police station.",
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF1C1B1E),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 10),
-                ],
-              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),
