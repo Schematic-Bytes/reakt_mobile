@@ -46,7 +46,7 @@ class IntroRoute extends StatelessWidget {
                 onTap: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Features()),
+                    MaterialPageRoute(builder: (context) => const Features()),
                   );
                 },
                 child: Container(
