@@ -178,7 +178,7 @@ class InfoRoute extends StatelessWidget {
                         counterText: "",
                         fillColor: const Color.fromRGBO(179, 179, 179, 0.1),
                         filled: true,
-                        hintText: "",
+                        hintText: "Medical records",
                       ),
                     ),
                     const SizedBox(height: 24),
