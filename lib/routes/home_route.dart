@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_number/mobile_number.dart';
 import 'package:provider/provider.dart';
 import 'package:reakt/routes/settings_route.dart';
 
@@ -19,10 +20,8 @@ class _HomeRouteState extends State<HomeRoute> {
   bool onTapMic = false;
 
   Future<Placemark> getCurrentLocationPlacemark(Position position) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-    final locationData =
-        placemarks.where((loc) => loc.thoroughfare?.isNotEmpty ?? false);
+    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+    final locationData = placemarks.where((loc) => loc.thoroughfare?.isNotEmpty ?? false);
     return locationData.first;
   }
 
@@ -34,9 +33,7 @@ class _HomeRouteState extends State<HomeRoute> {
       height: MediaQuery.sizeOf(context).width,
       width: MediaQuery.sizeOf(context).width,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            shape: const CircleBorder(),
-            backgroundColor: const Color(0xFF000000)),
+        style: ElevatedButton.styleFrom(shape: const CircleBorder(), backgroundColor: const Color(0xFF000000)),
         child: Text(
           "Tap here to send Emergency message",
           textAlign: TextAlign.center,
@@ -54,13 +51,16 @@ class _HomeRouteState extends State<HomeRoute> {
 
           final geohash = GeoPoint(loc.latitude, loc.longitude);
 
+          final String? mobileNumber = await MobileNumber.mobileNumber;
+
           await database.collection("requests").add({
             "geohash": geohash,
             "location": {
               "sub": landmark.thoroughfare,
               "locality": landmark.locality,
               "postalcode": landmark.postalCode,
-            }
+            },
+            "phone": mobileNumber
           });
 
           setState(() {
@@ -96,9 +96,7 @@ class _HomeRouteState extends State<HomeRoute> {
         height: MediaQuery.sizeOf(context).width,
         width: MediaQuery.sizeOf(context).width,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              shape: const CircleBorder(),
-              backgroundColor: const Color(0xFFD71921)),
+          style: ElevatedButton.styleFrom(shape: const CircleBorder(), backgroundColor: const Color(0xFFD71921)),
           child: Text(
             "Message sent successfully",
             textAlign: TextAlign.center,
@@ -131,8 +129,7 @@ class _HomeRouteState extends State<HomeRoute> {
                           ),
                         ),
                         FutureBuilder<Placemark>(
-                            future: Geolocator.getCurrentPosition().then(
-                                (value) => getCurrentLocationPlacemark(value)),
+                            future: Geolocator.getCurrentPosition().then((value) => getCurrentLocationPlacemark(value)),
                             builder: (context, snapshot) {
                               String location = "loading";
                               if (snapshot.hasData) {
@@ -152,14 +149,12 @@ class _HomeRouteState extends State<HomeRoute> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: const Color.fromRGBO(179, 179, 179, 0.1)),
+                          borderRadius: BorderRadius.circular(50), color: const Color.fromRGBO(179, 179, 179, 0.1)),
                       child: IconButton(
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const SettingsRoute()),
+                            MaterialPageRoute(builder: (context) => const SettingsRoute()),
                           );
                         },
                         icon: const Icon(
@@ -174,29 +169,6 @@ class _HomeRouteState extends State<HomeRoute> {
               Column(
                 children: [
                   sosState,
-                  // FutureBuilder<void>(
-                  //     future: Future.delayed(const Duration(milliseconds: 3)),
-                  //     builder: (context, snapshot) {
-                  //       return SizedBox(
-                  //         height: MediaQuery.sizeOf(context).width,
-                  //         width: MediaQuery.sizeOf(context).width,
-                  //         child: ElevatedButton(
-                  //           style: ElevatedButton.styleFrom(
-                  //               shape: const CircleBorder(), backgroundColor: const Color(0xFF000000)),
-                  //           child: (snapshot.connectionState == ConnectionState.waiting)
-                  //               ? Text(
-                  //                   "Tap here to send Emergeny message",
-                  //                   textAlign: TextAlign.center,
-                  //                   style: GoogleFonts.inter(fontSize: 28, color: Colors.white),
-                  //                 )
-                  //               : const CupertinoActivityIndicator(
-                  //                   color: Colors.white,
-                  //                   radius: 20,
-                  //                 ),
-                  //           onPressed: () {},
-                  //         ),
-                  //       );
-                  //     }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -205,8 +177,7 @@ class _HomeRouteState extends State<HomeRoute> {
                         height: 72,
                         child: ElevatedButton(
                           onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF1C1B1E)),
+                          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1C1B1E)),
                           child: const Icon(
                             Icons.mic_none_outlined,
                             color: Colors.white,
@@ -214,8 +185,7 @@ class _HomeRouteState extends State<HomeRoute> {
                         ),
                       ),
                       FutureBuilder<Placemark>(
-                        future: Geolocator.getCurrentPosition().then(
-                            (value) => getCurrentLocationPlacemark(value)),
+                        future: Geolocator.getCurrentPosition().then((value) => getCurrentLocationPlacemark(value)),
                         builder: (context, snapshot) {
                           String location = "loading";
                           if (snapshot.hasData) {
@@ -245,8 +215,7 @@ class _HomeRouteState extends State<HomeRoute> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const SettingsRoute()),
+                      MaterialPageRoute(builder: (context) => const SettingsRoute()),
                     );
                   },
                   icon: const Icon(
@@ -266,8 +235,7 @@ class _HomeRouteState extends State<HomeRoute> {
                         height: 72,
                         child: ElevatedButton(
                           onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF1C1B1E)),
+                          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1C1B1E)),
                           child: onTapMic
                               ? const Icon(
                                   Icons.stop_circle_outlined,
